@@ -111,11 +111,11 @@ namespace PAeroporto
                         break;
                     case 5:
                         Console.Clear();
-                        //restritos.InserirRestrito();
+                        restritos.InserirRestrito();
                         break;
                     case 6:
                         Console.Clear();
-                        //restritos.RemoverRestrito();
+                        restritos.RemoverRestrito();
                         break;
                     case 0:
                         Console.WriteLine("Você saiu do Menu de Passageiros!");
@@ -165,11 +165,11 @@ namespace PAeroporto
                         break;
                     case 5:
                         Console.Clear();
-                        //restritos.InserirBloqueado();
+                        bloqueados.InserirBloqueado();
                         break;
                     case 6:
                         Console.Clear();
-                        //restritos.RemoverBloqueado();
+                        bloqueados.RemoverBloqueado();
                         break;
                     case 0:
                         Console.WriteLine("Você saiu do Menu de Companhias!");
@@ -242,6 +242,7 @@ namespace PAeroporto
                 switch (opc)
                 {
                     case 1:
+                        Console.Clear();
                         voo.InserirVoo();
                         break;
                     case 2:

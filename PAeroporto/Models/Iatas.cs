@@ -21,7 +21,7 @@ namespace PAeroporto.Models
             Banco banco = new Banco();
             Console.Clear();
             string sql = $"SELECT * FROM Iatas;";
-            banco.Select(sql, 2);
+            banco.Select(sql, 8);
             Console.WriteLine("\nFim da Impressão de Iatas. Pressione ENTER para continuar!");
             Console.ReadKey();
         }

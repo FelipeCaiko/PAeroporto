@@ -209,7 +209,6 @@ namespace PAeroporto.Models
         public void ListarAeronaves()
         {
             Banco banco = new Banco();
-            Console.Clear();
             string sql = $"SELECT * FROM Aeronave;";
             banco.Select(sql, 3);
             Console.WriteLine("\nFim da Impressão de Aeronaves. Pressione ENTER para continuar!");

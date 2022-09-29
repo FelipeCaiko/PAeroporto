@@ -18,6 +18,7 @@ namespace PAeroporto.Services
             conn = new SqlConnection(Conexao);
         }
 
+        #region Realizar Insert no Banco de Dados
         public void Add(string sql)
         {
             conn.Open();
@@ -25,7 +26,9 @@ namespace PAeroporto.Services
             sqlInsert.ExecuteNonQuery();
             conn.Close();
         }
+        #endregion
 
+        #region Realizar Update no Banco de Dados
         public void Update(string sql)
         {
             conn.Open();
@@ -33,7 +36,19 @@ namespace PAeroporto.Services
             sqlInsert.ExecuteNonQuery();
             conn.Close();
         }
+        #endregion
 
+        #region Realizar Delete no Banco de Dados
+        public void Delete(string sql)
+        {
+            conn.Open();
+            SqlCommand sqlInsert = new SqlCommand(sql, conn);
+            sqlInsert.ExecuteNonQuery();
+            conn.Close();
+        }
+        #endregion
+
+        #region Realizar Select All no Banco de Dados
         public void Select(string sql, int op)
         {
             conn.Open();
@@ -165,6 +180,9 @@ namespace PAeroporto.Services
                     break;
             }
         }
+        #endregion
+
+        #region Verificar existencia no banco de dados
         public int Verify(string sql)
         {
             conn.Open();
@@ -192,7 +210,9 @@ namespace PAeroporto.Services
             conn.Close();
             return 0;
         }
+        #endregion
 
+        #region Verificar existencia e retornar Companhia
         public CompanhiaAerea VerifyReturnCA(string sql)
         {
             conn.Open();
@@ -223,6 +243,9 @@ namespace PAeroporto.Services
                 return null;
             }
         }
+        #endregion
+
+        #region Verificar existencia e retornar Aeronave
         public Aeronave VerifyReturnAN(string sql)
         {
             conn.Open();
@@ -239,7 +262,7 @@ namespace PAeroporto.Services
                     {
                         Aeronave aeronave = new Aeronave();
                         aeronave.Inscricao = reader.GetString(0);
-                        aeronave.CNPJCompanhia.CNPJ = reader.GetString(1);
+                        aeronave.CNPJCompanhia = new CompanhiaAerea();
                         aeronave.Capacidade = reader.GetInt32(2);
                         aeronave.UltimaVenda = reader.GetDateTime(3);
                         aeronave.DataCadastro = reader.GetDateTime(4);
@@ -253,5 +276,35 @@ namespace PAeroporto.Services
             conn.Close();
             return null;
         }
+        #endregion
+
+        #region Verificar existencia e retornar Iata
+        public Iatas VerifyReturnIA(string sql)
+        {
+            conn.Open();
+
+            SqlCommand sqlVerify = conn.CreateCommand();
+            sqlVerify.CommandText = sql;
+            sqlVerify.Connection = conn;
+
+            using (SqlDataReader reader = sqlVerify.ExecuteReader())
+            {
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Iatas iatas = new Iatas();
+                        iatas.Sigla = reader.GetString(0);
+                        iatas.Descricao = reader.GetString(1);
+
+                        conn.Close();
+                        return iatas;
+                    }
+                }
+            }
+            conn.Close();
+            return null;
+        }
+        #endregion
     }
 }

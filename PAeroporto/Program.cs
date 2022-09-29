@@ -76,8 +76,11 @@ namespace PAeroporto
         #region MenuPassageiro
         public static void MenuPassageiro()
         {
+            Passageiro passageiro = new Passageiro();
+            Restritos restritos = new Restritos();
             do
             {
+                Console.Clear();
                 Console.WriteLine("1 - Cadastrar Passageiro");
                 Console.WriteLine("2 - Buscar passageiro");
                 Console.WriteLine("3 - Editar Passageiro");
@@ -91,16 +94,28 @@ namespace PAeroporto
                 switch (opc)
                 {
                     case 1:
+                        Console.Clear();
+                        passageiro.InserirPassageiro();
                         break;
                     case 2:
+                        Console.Clear();
+                        passageiro.ListarCPF(null);
                         break;
                     case 3:
+                        Console.Clear();
+                        passageiro.EditarPassageiro();
                         break;
                     case 4:
+                        Console.Clear();
+                        passageiro.ListarPassageiros();
                         break;
                     case 5:
+                        Console.Clear();
+                        //restritos.InserirRestrito();
                         break;
                     case 6:
+                        Console.Clear();
+                        //restritos.RemoverRestrito();
                         break;
                     case 0:
                         Console.WriteLine("Você saiu do Menu de Passageiros!");
@@ -116,6 +131,7 @@ namespace PAeroporto
         public static void MenuCompanhia()
         {
             CompanhiaAerea companhiaAerea = new CompanhiaAerea();
+            Bloqueados bloqueados = new Bloqueados();
             do
             {
                 Console.Clear();
@@ -149,10 +165,11 @@ namespace PAeroporto
                         break;
                     case 5:
                         Console.Clear();
-                        //restritos.InserirRestrito();
+                        //restritos.InserirBloqueado();
                         break;
                     case 6:
-                        //restritos.RemoverRestrito();
+                        Console.Clear();
+                        //restritos.RemoverBloqueado();
                         break;
                     case 0:
                         Console.WriteLine("Você saiu do Menu de Companhias!");
@@ -167,8 +184,10 @@ namespace PAeroporto
         #region MenuAeronave
         public static void MenuAeronave()
         {
+            Aeronave aeronave = new Aeronave();
             do
             {
+                Console.Clear();
                 Console.WriteLine("1 - Cadastrar Aeronave");
                 Console.WriteLine("2 - Buscar Aeronave");
                 Console.WriteLine("3 - Editar Aeronave");
@@ -180,12 +199,20 @@ namespace PAeroporto
                 switch (opc)
                 {
                     case 1:
+                        Console.Clear();
+                        aeronave.InserirAeronave();
                         break;
                     case 2:
+                        Console.Clear();
+                        aeronave.ListarInscricao(null);
                         break;
                     case 3:
+                        Console.Clear();
+                        aeronave.EditarAeronave();
                         break;
                     case 4:
+                        Console.Clear();
+                        aeronave.ListarAeronaves();
                         break;
                     case 0:
                         Console.WriteLine("Você saiu do Menu de Aeronaves!");
@@ -200,8 +227,10 @@ namespace PAeroporto
         #region MenuVoo
         public static void MenuVoo()
         {
+            Voo voo = new Voo();
             do
             {
+                Console.Clear();
                 Console.WriteLine("1 - Cadastrar Voo");
                 Console.WriteLine("2 - Buscar Voo");
                 Console.WriteLine("3 - Editar Voo");
@@ -213,6 +242,7 @@ namespace PAeroporto
                 switch (opc)
                 {
                     case 1:
+                        voo.InserirVoo();
                         break;
                     case 2:
                         break;

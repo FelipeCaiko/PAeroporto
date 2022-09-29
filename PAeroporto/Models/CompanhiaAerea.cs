@@ -14,7 +14,7 @@ namespace PAeroporto.Models
         public DateTime DataAbertura { get; set; }
         public DateTime DataCadastro { get; set; }
         public DateTime UltimoVoo { get; set; }
-        public char Situacao { get; set; }
+        public string Situacao { get; set; }
 
         public CompanhiaAerea()
         {
@@ -57,7 +57,7 @@ namespace PAeroporto.Models
 
                     this.DataCadastro = DateTime.Now;
                     this.UltimoVoo = DateTime.Now;
-                    this.Situacao = 'A';
+                    this.Situacao = "A";
 
                     banco = new Banco();
 
@@ -130,7 +130,7 @@ namespace PAeroporto.Models
                                 break;
                             case 2:
                                 Console.Write("Informe a nova Data de Abertura: ");
-                                string novaDataAbertura = Console.ReadLine();
+                                DateTime novaDataAbertura = DateTime.Parse(Console.ReadLine());
 
                                 sql = $"UPDATE CompanhiaAerea SET DataAbertura = ('{novaDataAbertura}');";
                                 banco.Update(sql);

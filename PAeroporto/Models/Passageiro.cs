@@ -11,11 +11,11 @@ namespace PAeroporto.Models
     {
         public string CPF { get; set; }
         public string Nome { get; set; }
-        public char Sexo { get; set; }
+        public string Sexo { get; set; }
         public DateTime DataNascimento { get; set; }
         public DateTime DataCadastro { get; set; }
         public DateTime UltimaCompra { get; set; }
-        public char Situacao { get; set; }
+        public string Situacao { get; set; }
 
         public Passageiro()
         {
@@ -60,9 +60,9 @@ namespace PAeroporto.Models
                     do
                     {
                         Console.Write("Informe o Sexo. M / F : ");
-                        this.Sexo = char.Parse(Console.ReadLine().ToUpper());
+                        this.Sexo = Console.ReadLine().ToUpper();
 
-                        if (this.Sexo != 'M' && this.Sexo != 'F')
+                        if (this.Sexo != "M" && this.Sexo != "F")
                         {
                             Console.WriteLine("Voce inseriu um sexo inválido!");
                             verifSexo = false;
@@ -74,7 +74,7 @@ namespace PAeroporto.Models
 
                     this.UltimaCompra = DateTime.Now;
                     this.DataCadastro = DateTime.Now;
-                    this.Situacao = 'A';
+                    this.Situacao = "A";
 
                     banco = new Banco();
 
@@ -139,7 +139,7 @@ namespace PAeroporto.Models
                                 Console.Write("Informe o novo Nome: ");
                                 string novoNome = Console.ReadLine();
 
-                                sql = $"UPDATE Passageiro SET Nome = ('{novoNome}');";
+                                sql = $"UPDATE Passageiro SET Nome = ('{novoNome}') WHERE CPF = ('{CPF}');";
                                 banco.Update(sql);
 
                                 Console.WriteLine("\nNome do Passageiro alterado com secesso!");
@@ -149,7 +149,7 @@ namespace PAeroporto.Models
                                 Console.Write("Informe a nova Data de Nascimento: ");
                                 DateTime novaDataNascimento = DateTime.Parse(Console.ReadLine());
 
-                                sql = $"UPDATE Passageiro SET DataNascimento = ('{novaDataNascimento}');";
+                                sql = $"UPDATE Passageiro SET DataNascimento = ('{novaDataNascimento}') WHERE CPF = ('{CPF}');";
                                 banco.Update(sql);
 
                                 Console.WriteLine("\nData de Nascimento alterada com secesso!");
@@ -157,13 +157,13 @@ namespace PAeroporto.Models
                                 break;
                             case 3:
                                 bool verifSexo;
-                                char novoSexo;
+                                string novoSexo;
                                 do
                                 {
                                     Console.Write("Informe o novo Sexo. M / F : ");
-                                    novoSexo = char.Parse(Console.ReadLine().ToUpper());
+                                    novoSexo = Console.ReadLine();
 
-                                    if (novoSexo != 'M' && novoSexo != 'F')
+                                    if (novoSexo != "M" && novoSexo != "F")
                                     {
                                         Console.WriteLine("Voce inseriu um sexo inválido!");
                                         verifSexo = false;
@@ -173,7 +173,7 @@ namespace PAeroporto.Models
 
                                 } while (verifSexo == false);
 
-                                sql = $"UPDATE Passageiro SET Sexo = ('{novoSexo}');";
+                                sql = $"UPDATE Passageiro SET Sexo = ('{novoSexo}') WHERE CPF = ('{CPF}');";
                                 banco.Update(sql);
 
                                 Console.WriteLine("\nSexo do Passageiro alterado com secesso!");
@@ -192,12 +192,12 @@ namespace PAeroporto.Models
                                     switch (opc)
                                     {
                                         case 1:
-                                            sql = $"UPDATE Passageiro SET Situacao = 'A';";
+                                            sql = $"UPDATE Passageiro SET Situacao = 'A' WHERE CPF = ('{CPF}');";
                                             banco.Update(sql);
                                             Console.WriteLine("\nSituação do Passageiro alterado com secesso!");
                                             break;
                                         case 2:
-                                            sql = $"UPDATE Passageiro SET Situacao = 'I';";
+                                            sql = $"UPDATE Passageiro SET Situacao = 'I' WHERE CPF = ('{CPF}');";
                                             banco.Update(sql);
                                             Console.WriteLine("\nSituação do Passageiro alterado com secesso!");
                                             break;

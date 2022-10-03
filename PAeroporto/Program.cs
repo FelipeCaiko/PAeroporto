@@ -38,10 +38,6 @@ namespace PAeroporto
                         Console.Clear();
                         MenuVenda();
                         break;
-                    case 7:
-                        Console.Clear();
-                        MenuItemVenda();
-                        break;
                     case 0:
                         Console.WriteLine("Obrigado por usar nosso aplicativo!");
                         Environment.Exit(0);
@@ -66,7 +62,6 @@ namespace PAeroporto
             Console.WriteLine("4 - Menu de Voos");
             Console.WriteLine("5 - Menu de Passagens ");
             Console.WriteLine("6 - Menu de Vendas ");
-            Console.WriteLine("7 - Menu de Item Vendas ");
             Console.WriteLine("0 - Sair do Menu Principal");
             Console.Write("Opção: ");
 
@@ -87,6 +82,7 @@ namespace PAeroporto
                 Console.WriteLine("4 - Listar Passageiros");
                 Console.WriteLine("5 - Cadastrar CPF na lista de restritos");
                 Console.WriteLine("6 - Remover CPF na lista de restritos");
+                Console.WriteLine("7 - Listar Passageiros na lista de restritos");
                 Console.WriteLine("0 - Sair do Menu de Passageiros");
                 Console.Write("Opção: ");
                 int opc = int.Parse(Console.ReadLine());
@@ -117,6 +113,10 @@ namespace PAeroporto
                         Console.Clear();
                         restritos.RemoverRestrito();
                         break;
+                    case 7:
+                        Console.Clear();
+                        restritos.ListarRestritos();
+                        break;
                     case 0:
                         Console.WriteLine("Você saiu do Menu de Passageiros!");
                         return;
@@ -141,6 +141,7 @@ namespace PAeroporto
                 Console.WriteLine("4 - Listar Companhias");
                 Console.WriteLine("5 - Inserir CNPJ na lista de Empresas Bloqueadas");
                 Console.WriteLine("6 - Remover CNPJ na lista de Empresas Bloqueadas");
+                Console.WriteLine("7 - Listar Empresas Bloqueadas");
                 Console.WriteLine("0 - Sair do Menu de Companhias");
                 Console.Write("Opção: ");
                 int opc = int.Parse(Console.ReadLine());
@@ -170,6 +171,10 @@ namespace PAeroporto
                     case 6:
                         Console.Clear();
                         bloqueados.RemoverBloqueado();
+                        break;
+                    case 7:
+                        Console.Clear();
+                        bloqueados.ListarBloqueados();
                         break;
                     case 0:
                         Console.WriteLine("Você saiu do Menu de Companhias!");
@@ -246,10 +251,16 @@ namespace PAeroporto
                         voo.InserirVoo();
                         break;
                     case 2:
+                        Console.Clear();
+                        voo.ListarIDVoo(null);
                         break;
                     case 3:
+                        Console.Clear();
+                        voo.EditarVoo();
                         break;
                     case 4:
+                        Console.Clear();
+                        voo.ListarVoos();
                         break;
                     case 0:
                         Console.WriteLine("Você saiu do Menu de Voos!");
@@ -264,25 +275,24 @@ namespace PAeroporto
         #region MenuPassagem
         public static void MenuPassagem()
         {
+            PassagemVoo passagemVoo = new PassagemVoo();
             do
             {
-                Console.WriteLine("1 - Cadastrar Passagem");
-                Console.WriteLine("2 - Buscar Passagem");
-                Console.WriteLine("3 - Editar Passagem");
-                Console.WriteLine("4 - Listar Passagens");
-                Console.WriteLine("0 - Sair do Menu de Passagems");
+                Console.WriteLine("1 - Buscar Passagem");
+                Console.WriteLine("2 - Listar Passagens");
+                Console.WriteLine("0 - Sair do Menu de Passagens");
                 Console.Write("Opção: ");
                 int opc = int.Parse(Console.ReadLine());
 
                 switch (opc)
                 {
                     case 1:
+                        Console.Clear();
+                        passagemVoo.ListarIDPassagem(null);
                         break;
                     case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
+                        Console.Clear();
+                        passagemVoo.ListarPassagens();
                         break;
                     case 0:
                         Console.WriteLine("Você saiu do Menu de Passagens!");
@@ -297,11 +307,12 @@ namespace PAeroporto
         #region MenuVenda
         public static void MenuVenda()
         {
+            Venda venda = new Venda();
             do
             {
-                Console.WriteLine("1 - Cadastrar Venda");
-                Console.WriteLine("2 - Buscar Venda");
-                Console.WriteLine("3 - Listar Vendas");
+                Console.WriteLine("1 - Cadastrar Venda de Passagem");
+                Console.WriteLine("2 - Buscar Venda de Passagem");
+                Console.WriteLine("3 - Listar Vendas de Passagens");
                 Console.WriteLine("0 - Sair do Menu de Vendas");
                 Console.Write("Opção: ");
                 int opc = int.Parse(Console.ReadLine());
@@ -309,44 +320,16 @@ namespace PAeroporto
                 switch (opc)
                 {
                     case 1:
+                        Console.Clear();
                         break;
                     case 2:
+                        Console.Clear();
                         break;
                     case 3:
+                        Console.Clear();
                         break;
                     case 0:
                         Console.WriteLine("Você saiu do Menu de Vendas!");
-                        return;
-                    default:
-                        Console.WriteLine("Opção Inválida! Favor selecionar uma das opções acima!");
-                        break;
-                }
-            } while (true);
-        }
-        #endregion
-
-        #region MenuItemVenda
-        public static void MenuItemVenda()
-        {
-            do
-            {
-                Console.WriteLine("1 - Cadastrar Venda de Item");
-                Console.WriteLine("2 - Buscar Venda de Item");
-                Console.WriteLine("3 - Listar Vendas de Itens");
-                Console.WriteLine("0 - Sair do Menu de Venda de Itens");
-                Console.Write("Opção: ");
-                int opc = int.Parse(Console.ReadLine());
-
-                switch (opc)
-                {
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 0:
-                        Console.WriteLine("Você saiu do Menu de Venda de Itens!");
                         return;
                     default:
                         Console.WriteLine("Opção Inválida! Favor selecionar uma das opções acima!");

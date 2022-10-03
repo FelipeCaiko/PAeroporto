@@ -133,7 +133,7 @@ namespace PAeroporto.Models
                                 Console.Write("Informe a nova Capacidade: ");
                                 int novaCapacidade = int.Parse(Console.ReadLine());
 
-                                sql = $"UPDATE Aeronave SET Capacidade = ('{novaCapacidade}');";
+                                sql = $"UPDATE Aeronave SET Capacidade = ('{novaCapacidade}') WHERE Inscricao = '{Inscricao}';";
                                 banco.Update(sql);
 
                                 Console.WriteLine("\nCapacidade da Aeronave alterada com secesso!");
@@ -153,7 +153,7 @@ namespace PAeroporto.Models
 
                                 if (verificar != 0)
                                 {
-                                    sql = $"UPDATE Aeronave SET CNPJCompanhia = ('{companhiaAerea.CNPJ}');";
+                                    sql = $"UPDATE Aeronave SET CNPJCompanhia = ('{companhiaAerea.CNPJ}') WHERE Inscricao = '{Inscricao}';";
                                     banco.Update(sql);
 
                                     Console.WriteLine("\nCompanhia Aérea reponsável pela Aeronave foi transferida com secesso!");
@@ -175,12 +175,12 @@ namespace PAeroporto.Models
                                     switch (opc)
                                     {
                                         case 1:
-                                            sql = $"UPDATE Aeronave SET Situacao = 'A';";
+                                            sql = $"UPDATE Aeronave SET Situacao = 'A' WHERE Inscricao = '{Inscricao}';";
                                             banco.Update(sql);
                                             Console.WriteLine("\nSituação da Aeronave alterada com secesso!");
                                             break;
                                         case 2:
-                                            sql = $"UPDATE Aeronave SET Situacao = 'I';";
+                                            sql = $"UPDATE Aeronave SET Situacao = 'I' WHERE Inscricao = '{Inscricao}';";
                                             banco.Update(sql);
                                             Console.WriteLine("\nSituação da Aeronave alterada com secesso!");
                                             break;
@@ -318,7 +318,8 @@ namespace PAeroporto.Models
             {
                 char aux = sufixo[i];
                 if (Char.IsLetter(aux)) ;
-                else return false;
+                else
+                    return false;
             }
             return true;
         }

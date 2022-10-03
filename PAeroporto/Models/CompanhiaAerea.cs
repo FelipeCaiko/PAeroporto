@@ -122,7 +122,7 @@ namespace PAeroporto.Models
                                 Console.Write("Informe a nova Razão Social: ");
                                 string novaRazao = Console.ReadLine();
 
-                                sql = $"UPDATE CompanhiaAerea SET RazaoSocial = ('{novaRazao}');";
+                                sql = $"UPDATE CompanhiaAerea SET RazaoSocial = ('{novaRazao}') WHERE CNPJ = ('{CNPJ}');";
                                 banco.Update(sql);
 
                                 Console.WriteLine("Razão Social alterada com secesso!");
@@ -132,7 +132,7 @@ namespace PAeroporto.Models
                                 Console.Write("Informe a nova Data de Abertura: ");
                                 DateTime novaDataAbertura = DateTime.Parse(Console.ReadLine());
 
-                                sql = $"UPDATE CompanhiaAerea SET DataAbertura = ('{novaDataAbertura}');";
+                                sql = $"UPDATE CompanhiaAerea SET DataAbertura = ('{novaDataAbertura}') WHERE CNPJ = ('{CNPJ}');";
                                 banco.Update(sql);
 
                                 Console.WriteLine("Data de Abertura alterada com secesso!");
@@ -151,12 +151,12 @@ namespace PAeroporto.Models
                                     switch (opc)
                                     {
                                         case 1:
-                                            sql = $"UPDATE CompanhiaAerea SET Situacao = 'A';";
+                                            sql = $"UPDATE CompanhiaAerea SET Situacao = 'A' WHERE CNPJ = ('{CNPJ}');";
                                             banco.Update(sql);
                                             Console.WriteLine("Situação da Companhia alterada com secesso!");
                                             break;
                                         case 2:
-                                            sql = $"UPDATE CompanhiaAerea SET Situacao = 'I';";
+                                            sql = $"UPDATE CompanhiaAerea SET Situacao = 'I' WHERE CNPJ = ('{CNPJ}');";
                                             banco.Update(sql);
                                             Console.WriteLine("Situação da Companhia alterada com secesso!");
                                             break;

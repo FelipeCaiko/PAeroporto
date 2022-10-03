@@ -132,7 +132,7 @@ namespace PAeroporto.Services
                             Console.WriteLine("ID da Passagem: {0}", reader.GetString(0));
                             Console.WriteLine("ID do Voo: {0}", reader.GetString(1));
                             Console.WriteLine("Data da Ultima Operação: {0}", reader.GetDateTime(2));
-                            Console.WriteLine("Valor da Passagem: {0}", reader.GetFloat(3));
+                            Console.WriteLine("Valor da Passagem: {0}", reader.GetDouble(3));
                             Console.WriteLine("Situação da Passagem: {0}\n", reader.GetString(4));
                         }
                     }
@@ -299,6 +299,72 @@ namespace PAeroporto.Services
 
                         conn.Close();
                         return iatas;
+                    }
+                }
+            }
+            conn.Close();
+            return null;
+        }
+        #endregion
+
+        #region Verificar existencia e retornar Passageiro
+        public Passageiro VerifyReturnPA(string sql)
+        {
+            conn.Open();
+
+            SqlCommand sqlVerify = conn.CreateCommand();
+            sqlVerify.CommandText = sql;
+            sqlVerify.Connection = conn;
+
+            using (SqlDataReader reader = sqlVerify.ExecuteReader())
+            {
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Passageiro passageiro = new Passageiro();
+                        passageiro.CPF = reader.GetString(0);
+                        passageiro.Nome = reader.GetString(1);
+                        passageiro.DataNascimento = reader.GetDateTime(2);
+                        passageiro.Sexo = reader.GetString(3);
+                        passageiro.UltimaCompra = reader.GetDateTime(4);
+                        passageiro.DataCadastro = reader.GetDateTime(5);
+                        passageiro.Situacao = reader.GetString(6);
+
+                        conn.Close();
+                        return passageiro;
+                    }
+                }
+            }
+            conn.Close();
+            return null;
+        }
+        #endregion
+
+        #region Verificar existencia e retornar Passagem
+        public PassagemVoo VerifyReturnPS(string sql)
+        {
+            conn.Open();
+
+            SqlCommand sqlVerify = conn.CreateCommand();
+            sqlVerify.CommandText = sql;
+            sqlVerify.Connection = conn;
+
+            using (SqlDataReader reader = sqlVerify.ExecuteReader())
+            {
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        PassagemVoo passagem = new PassagemVoo();
+                        passagem.ID = reader.GetInt32(0);
+                        passagem.IDVoo = new Voo();
+                        passagem.DataUltimaOperacao = reader.GetDateTime(2);
+                        passagem.Valor = reader.GetFloat(3);
+                        passagem.Situacao = reader.GetString(4);
+
+                        conn.Close();
+                        return passagem;
                     }
                 }
             }

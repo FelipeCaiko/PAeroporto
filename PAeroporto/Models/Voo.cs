@@ -78,9 +78,15 @@ namespace PAeroporto.Models
                     this.AssentosOcupados = 0;
                     this.Situacao = "A";
 
+                    Console.Write("Informe qual será o valor das Passagens desse Voo: ");
+                    float valor = float.Parse(Console.ReadLine());
+
+                    string idVoo = this.ID;
+
                     banco = new Banco();
 
-                    sql = $"INSERT INTO Voo(ID, InscAeronave, DataCadastro, DataVoo, Destino, AssentosOcupados, Situacao) VALUES ('{this.ID}', '{this.InscAeronave.Inscricao}', '{this.DataCadastro}', '{this.DataVoo}', '{this.Destino.Sigla}', '{this.AssentosOcupados}', '{this.Situacao}');";
+                    sql = $"INSERT INTO Voo(ID, InscAeronave, DataCadastro, DataVoo, Destino, AssentosOcupados, Situacao) VALUES ('{this.ID}', '{this.InscAeronave.Inscricao}', '{this.DataCadastro}', '{this.DataVoo}', '{this.Destino.Sigla}', '{this.AssentosOcupados}', '{this.Situacao}');" +
+                        $"EXEC dbo.CadastroPassagens '{valor}','{idVoo}';";
                     banco.Add(sql);
 
                     Console.WriteLine("\nVoo Cadastrado com Sucesso! Pressione ENTER para Continuar!");
@@ -88,6 +94,179 @@ namespace PAeroporto.Models
                     break;
                 }
             } while (true);
+        }
+        #endregion
+
+        #region Editar Voo
+        public void EditarVoo()
+        {
+            Console.WriteLine("Editar Dados do Voo:");
+            Banco banco = new Banco();
+
+            do
+            {
+                Console.Write("Informe 0 caso deseje sair. \nInforme o ID do Voo a ser Editado: ");
+                ID = Console.ReadLine();
+                if (ID == "0")
+                    break;
+
+                String sql = $"SELECT ID, InscAeronave, DataVoo, Situacao FROM Voo WHERE ID = ('{ID}');";
+                int verificar = banco.Verify(sql);
+
+                if (verificar != 0)
+                {
+                    banco = new Banco();
+
+                    int op = 0;
+                    do
+                    {
+                        Console.Clear();
+                        ListarIDVoo(ID);
+                        Console.WriteLine("Informe a opcão que deseja alterar: ");
+                        Console.WriteLine(" 1 - Aeronave Responsável pelo Voo");
+                        Console.WriteLine(" 2 - Data do Voo");
+                        Console.WriteLine(" 3 - Situacao");
+                        Console.WriteLine(" 0 - Sair");
+                        Console.Write(" Informe a opcao: ");
+                        op = int.Parse(Console.ReadLine());
+
+                        switch (op)
+                        {
+                            case 0:
+                                Console.WriteLine("Você saiu do Menu de Alteração de Cadastro! Aperte ENTER para sair.");
+                                Console.ReadKey();
+                                break;
+                            case 1:
+                                Aeronave aeronave = new Aeronave();
+
+                                Console.WriteLine("Informe qual será a Aeronave que irá realizar o Voo: ");
+                                aeronave.ListarAeronaves();
+
+                                Console.Write("Informe a Inscrição da Aeronave que irá realizar o Voo: ");
+                                string novaAeronave = Console.ReadLine();
+
+                                sql = $"SELECT * FROM Aeronave WHERE Inscricao = ('{novaAeronave}');";
+                                aeronave = banco.VerifyReturnAN(sql);
+
+                                if (verificar != 0)
+                                {
+                                    sql = $"UPDATE Voo SET InscAeronave = ('{aeronave.Inscricao}') WHERE ID = '{ID}';";
+                                    banco.Update(sql);
+
+                                    Console.WriteLine("\nAeronave reponsável pelo Voo foi atualizada com secesso!");
+                                    Console.ReadKey();
+                                }
+                                else
+                                    Console.WriteLine("Inscrição da Aeronave informada não foi encontrada!");
+                                break;
+                            case 2:
+                                Console.Write("Informe a nova Data do Voo: ");
+                                DateTime novaDataVoo = DateTime.Parse(Console.ReadLine());
+
+                                sql = $"UPDATE Voo SET DataVoo = ('{novaDataVoo}');";
+                                banco.Update(sql);
+
+                                Console.WriteLine("\nData do Voo alterada com secesso!");
+                                Console.ReadKey();
+                                break;
+                            case 3:
+                                int opc = 0;
+                                do
+                                {
+                                    Console.WriteLine("\nInforme qual a nova Situação do Voo: ");
+                                    Console.WriteLine(" 1 - Situação Ativa");
+                                    Console.WriteLine(" 2 - Situação Inativa");
+                                    Console.Write(" Informe a opcao: ");
+                                    opc = int.Parse(Console.ReadLine());
+
+                                    switch (opc)
+                                    {
+                                        case 1:
+                                            sql = $"UPDATE Voo SET Situacao = 'A' WHERE ID = '{ID}'; ";
+                                            banco.Update(sql);
+                                            Console.WriteLine("\nSituação do Voo alterada com secesso!");
+                                            break;
+                                        case 2:
+                                            sql = $"UPDATE Voo SET Situacao = 'I' WHERE ID = '{ID}';";
+                                            banco.Update(sql);
+                                            Console.WriteLine("\nSituação do Voo alterada com secesso!");
+                                            break;
+                                        default:
+                                            Console.Write("\nOpcao Inválida! Aperte ENTER para executar novamente.");
+                                            Console.ReadKey();
+                                            break;
+                                    }
+                                } while (opc != 1 && opc != 2);
+
+                                Console.ReadKey();
+                                break;
+                            default:
+                                Console.Write("\nOpção Inválida! Aperte ENTER para executar novamente.");
+                                Console.ReadKey();
+                                break;
+                        }
+                    } while (op != 0);
+                    break;
+                }
+            } while (true);
+        }
+        #endregion
+
+        #region Listar Voos Cadastrados
+        public void ListarVoos()
+        {
+            Banco banco = new Banco();
+            Console.Clear();
+            string sql = $"SELECT * FROM Voo;";
+            banco.Select(sql, 4);
+            Console.WriteLine("\nFim da Impressão de Voos. Pressione ENTER para continuar!");
+            Console.ReadKey();
+        }
+        #endregion
+
+        #region Listar um Voo
+        public void ListarIDVoo(string id)
+        {
+            Banco banco = new Banco();
+
+            if (id == null)
+            {
+                ID = id;
+                do
+                {
+                    Console.Clear();
+                    Console.Write("Informe 0 caso deseje sair. \nInforme o ID do Voo que irá ser buscado: ");
+                    ID = Console.ReadLine();
+                    if (ID == "0")
+                        break;
+
+                    string sql = $"SELECT * FROM Voo WHERE ID = ('{ID}');";
+                    int verificar = banco.Verify(sql);
+
+                    if (verificar != 0)
+                    {
+                        banco = new Banco();
+                        banco.Select(sql, 4);
+                        Console.WriteLine("\nID do Voo foi encontrado. Pressione ENTER para continuar!");
+                        Console.ReadKey();
+                        break;
+                    }
+                    if (verificar == 0)
+                    {
+                        Console.WriteLine("\nID do Voo informado não foi encontrado! Pressione ENTER para continuar!");
+                        Console.ReadKey();
+                        Console.Clear();
+                    }
+                } while (true);
+            }
+            else
+            {
+                ID = id;
+                string sql = $"SELECT * FROM Voo WHERE ID = ('{ID}');";
+
+                banco = new Banco();
+                banco.Select(sql, 4);
+            }
         }
         #endregion
 

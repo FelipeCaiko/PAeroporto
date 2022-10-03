@@ -108,6 +108,18 @@ namespace PAeroporto.Models
             } while (true);
         }
         #endregion
+
+        #region Listar Passageiros Restritos
+        public void ListarRestritos()
+        {
+            Banco banco = new Banco();
+            Console.Clear();
+            string sql = $"SELECT * FROM Cadastro_Restritos;";
+            banco.Select(sql, 1);
+            Console.WriteLine("\nFim da Impressão de Passageiros Restritos. Pressione ENTER para continuar!");
+            Console.ReadKey();
+        }
+        #endregion
     }
 
 }

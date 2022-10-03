@@ -107,5 +107,17 @@ namespace PAeroporto.Models
             } while (true);
         }
         #endregion
+
+        #region Listar Companhias Bloqueadas
+        public void ListarBloqueados()
+        {
+            Banco banco = new Banco();
+            Console.Clear();
+            string sql = $"SELECT * FROM Cadastro_Bloqueados;";
+            banco.Select(sql, 1);
+            Console.WriteLine("\nFim da Impressão de Companhias Bloqueadas. Pressione ENTER para continuar!");
+            Console.ReadKey();
+        }
+        #endregion
     }
 }
